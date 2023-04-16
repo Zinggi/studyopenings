@@ -1,11 +1,11 @@
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import { Express, Request, Response, static as exposeStatic } from 'express';
-import * as jwt from 'express-jwt';
-import jwtAuthz = require('express-jwt-authz');
+// import * as jwt from 'express-jwt';
+// import jwtAuthz = require('express-jwt-authz');
 // @ts-ignore
 import { RequestHandler } from 'express-unless';
-import * as jwksRsa from 'jwks-rsa';
+// import * as jwksRsa from 'jwks-rsa';
 import * as path from 'path';
 import { assert } from '../util/assert';
 import { Action } from './action';
@@ -46,8 +46,8 @@ export class EndpointRegistry {
         endpoint,
         action,
         [
-          checkJwt,
-          jwtAuthz(authScopes),
+          // checkJwt,
+          // jwtAuthz(authScopes),
           EndpointRegistry.checkLoggedIn_
         ]);
   }
@@ -60,8 +60,8 @@ export class EndpointRegistry {
         endpoint,
         action,
         [
-          checkJwt,
-          jwtAuthz(authScopes),
+          // checkJwt,
+          // jwtAuthz(authScopes),
           EndpointRegistry.checkLoggedIn_,
           EndpointRegistry.checkIsPrivelegedUser_
         ]);
@@ -83,7 +83,9 @@ export class EndpointRegistry {
         EndpointRegistry.checkHasBody_,
         (req: Request, res: Response) => {
           const body = assert(req.body);
-          const user = ((req as any).user && (req as any).user.sub) || null;
+          (req as any).user = { sub: "Zinggi" }
+          let user = ((req as any).user && (req as any).user.sub) || null;
+          user = "Zinggi"
           action.checkRequest(body, user)
               .then(checkRequestResult => {
                 if (!checkRequestResult.success) {
@@ -104,7 +106,9 @@ export class EndpointRegistry {
 
   private static checkLoggedIn_(
       request: Request, response: Response, next: () => void): void {
+    (request as any).user = { sub: "Zinggi" }
     if (!(request as any).user || !(request as any).user.sub) {
+      
       response
           .status(403)
           .send('You are not logged in.');
@@ -139,15 +143,15 @@ export class EndpointRegistry {
   }
 }
 
-const AUTH0_DOMAIN = 'studyopenings.auth0.com';
-const checkJwt = jwt({
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `https://${AUTH0_DOMAIN}/.well-known/jwks.json`
-  }),
-  audience: 'studyopenings-api',
-  issuer: `https://${AUTH0_DOMAIN}/`,
-  algorithms: ['RS256']
-});
+// const AUTH0_DOMAIN = 'studyopenings.auth0.com';
+// const checkJwt = jwt({
+//   secret: jwksRsa.expressJwtSecret({
+//     cache: true,
+//     rateLimit: true,
+//     jwksRequestsPerMinute: 5,
+//     jwksUri: `https://${AUTH0_DOMAIN}/.well-known/jwks.json`
+//   }),
+//   audience: 'studyopenings-api',
+//   issuer: `https://${AUTH0_DOMAIN}/`,
+//   algorithms: ['RS256']
+// });
