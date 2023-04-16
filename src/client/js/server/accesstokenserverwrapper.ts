@@ -95,7 +95,7 @@ export class AccessTokenServerWrapper implements ServerWrapper {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.accessToken_
+        // 'Authorization': 'Bearer ' + this.accessToken_
       },
       credentials: 'include',
       body: JSON.stringify(body)
