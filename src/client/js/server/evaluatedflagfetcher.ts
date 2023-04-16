@@ -8,9 +8,10 @@ export class EvaluatedFlagFetcher {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
+      credentials: 'include'
     };
-    return fetch('/flags', options)
+    return fetch('/flags', options as any)
         .then(res => (res.json() as unknown) as EvaluateFlagsResponse)
         .then(evaluatedFlagsResponse => evaluatedFlagsResponse.evaluatedFlags)
         .catch(err => {

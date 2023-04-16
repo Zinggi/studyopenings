@@ -97,9 +97,10 @@ export class AccessTokenServerWrapper implements ServerWrapper {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.accessToken_
       },
+      credentials: 'include',
       body: JSON.stringify(body)
     };
-    return fetch(endpoint, options)
+    return fetch(endpoint, options as any)
         .then(res => {
           if (res.status != 200) {
             this.showAuthError_();
