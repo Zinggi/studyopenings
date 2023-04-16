@@ -28,10 +28,10 @@ import { Toasts } from '../common/toasts';
 import { ServerWrapper } from './serverwrapper';
 
 export class AccessTokenServerWrapper implements ServerWrapper {
-  private accessToken_: string;
+  // private accessToken_: string;
 
   constructor(accessToken: string) {
-    this.accessToken_ = accessToken;
+    // this.accessToken_ = accessToken;
   }
 
   getAllRepertoireMetadata(): Promise<Metadata[]> {
