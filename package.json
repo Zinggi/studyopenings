@@ -13,6 +13,7 @@
     "start-dev": "npm run compile && npm run copystatic && npm run copyclientlib && NODE_OPTIONS=--openssl-legacy-provider npm run webpack-dev && node build/server/main.js",
     "test": "jest",
     "webpack": "NODE_OPTIONS=--openssl-legacy-provider npx webpack --mode=production",
+    "build": "npm run compile && npm run copystatic && npm run copyclientlib && npm run webpack",
     "webpack-dev": "npx webpack --mode=development"
   },
   "repository": {
